@@ -1,0 +1,101 @@
+%% Archivo Mermaid.js con diagramas clave del sistema
+
+%% 1. Diagrama de Componentes
+componentDiagram
+    direction TB
+    
+    component Cliente {
+        [Frontend/Postman]
+    }
+    
+    component API {
+        [Controladores REST]
+        [Servicios]
+    }
+    
+    component Redis {
+        [Caché Porcentaje]
+    }
+    
+    component PostgreSQL {
+        [Historial Llamadas]
+    }
+    
+    component "Servicio Externo" {
+        [Mock/API Porcentaje]
+    }
+    
+    Cliente --> API : HTTP Requests
+    API --> Redis : Lee/Escribe caché
+    API --> PostgreSQL : Registra historial
+    API --> "Servicio Externo" : Obtiene porcentaje
+
+%% 2. Diagrama de Secuencia (Flujo Cálculo)
+sequenceDiagram
+    participant Cliente
+    participant API
+    participant Redis
+    participant ServicioExterno
+    participant PostgreSQL
+    
+    Cliente->>API: POST /calculate {num1, num2}
+    API->>Redis: ¿Existe porcentaje en caché?
+    alt Caché Hit
+        Redis-->>API: Retorna porcentaje
+    else Caché Miss
+        API->>ServicioExterno: GET /percentage (con reintentos)
+        ServicioExterno-->>API: Retorna porcentaje
+        API->>Redis: Guarda porcentaje (30m TTL)
+    end
+    API->>API: Calcula (num1 + num2) * (1 + %)
+    par Registro Async
+        API->>PostgreSQL: INSERT historial
+    end
+    API-->>Cliente: 200 OK {resultado}
+
+%% 3. Diagrama de Clases (Core)
+classDiagram
+    direction LR
+    
+    class Calculation {
+        <<Domain Entity>>
+        -double num1
+        -double num2
+        +sum() double
+    }
+    
+    class PercentageCache {
+        <<Interface>>
+        +getPercentage() Optional~Double~
+        +savePercentage(double percentage)
+    }
+    
+    class CalculatorService {
+        <<Service>>
+        -PercentageCache cache
+        +calculate(double num1, double num2) double
+    }
+    
+    Calculation <.. CalculatorService : Usa
+
+%% 4. Diagrama de Despliegue
+deploymentDiagram
+    deployment "Docker" {
+        node API [
+            label="Spring Boot App\n(Java 21)"
+            image="eclipse-temurin:21-jre"
+        ]
+        
+        node PostgreSQL [
+            label="PostgreSQL 15\nVolumen persistente"
+            image="postgres:15-alpine"
+        ]
+        
+        node Redis [
+            label="Redis 7\nCaché distribuida"
+            image="redis:7-alpine"
+        ]
+    }
+    
+    API --> PostgreSQL : JDBC
+    API --> Redis : Lettuce

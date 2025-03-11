@@ -1,0 +1,63 @@
+
+services:
+  calculator-api:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/calculator
+      SPRING_DATASOURCE_USERNAME: jlozanof
+      SPRING_DATASOURCE_PASSWORD: Ganando10k$
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_CACHE_TYPE: redis
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - backend-network
+
+  postgres:
+    image: postgres:17.1-alpine
+    environment:
+      POSTGRES_DB: calculator
+      POSTGRES_USER: jlozanof
+      POSTGRES_PASSWORD: Ganando10k$
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jlozanof -d calculator"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:7-alpine
+#    command: redis-server --save 20 1 --loglevel warning --requirepass vkRwrJMvFm
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - backend-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  backend-network:
+    driver: bridge
+
+
+#Verificación de Servicios:
+#API: http://localhost:8080/actuator/health
+#PostgreSQL: psql -h localhost -U app_user -d calculator
+#Redis: redis-cli -h localhost    
