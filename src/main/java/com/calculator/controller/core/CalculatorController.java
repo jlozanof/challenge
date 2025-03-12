@@ -1,28 +1,47 @@
+package com.calculator.controller.core;
 
+import com.calculator.anotations.RateLimited;
+import com.calculator.dto.request.CalculationRequestDTO;
+import com.calculator.dto.response.ApiResponseDTO;
+import com.calculator.dto.response.CalculationResponseDTO;
+import com.calculator.event.AuditLogEvent;
+import com.calculator.service.base.CalculatorService;
+import com.calculator.entity.enums.Endpoint;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-// Swagger
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
-@RequestMapping 
-public interface CalculatorController {
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import static com.calculator.controller.constants.ApiEndPointsConstant.API_CALCULATOR;
 
+@RestController
+@RequestMapping(API_CALCULATOR)
+public class CalculatorController {
+
+    private final CalculatorService calculatorService;
+    private final ApplicationEventPublisher eventPublisher;
+
+    public CalculatorController(
+            CalculatorService calculatorService,
+            ApplicationEventPublisher eventPublisher) {
+        this.calculatorService = calculatorService;
+        this.eventPublisher = eventPublisher;
+    }
+
+    @PostMapping
+    @RateLimited
+    public ResponseEntity<ApiResponseDTO<CalculationResponseDTO>> calculate(
+            @Valid @RequestBody CalculationRequestDTO request) {
+        CalculationResponseDTO result = calculatorService.calculateWithPercentage(request);
+
+        eventPublisher.publishEvent(new AuditLogEvent(
+                Endpoint.CALCULATE,
+                request,
+                result,
+                null));
+
+        return ResponseEntity.ok(ApiResponseDTO.success(result));
+    }
 }
-

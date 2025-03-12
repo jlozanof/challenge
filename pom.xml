@@ -32,6 +32,9 @@
 		 <resilience4j.version>2.1.0</resilience4j.version>
         <testcontainers.version>1.19.7</testcontainers.version>
         <springdoc.version>2.3.0</springdoc.version>
+		<bucket4j.version>8.10.0</bucket4j.version>
+		<caffeine.version>3.1.8</caffeine.version>
+		<lombok.version>1.18.32</lombok.version>
 	</properties>
 	<dependencies>
 		<!-- Spring Core -->
@@ -97,7 +100,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>${lombok.version}</version>
+			 <scope>provided</scope>
 		</dependency>
 
 
@@ -153,16 +157,25 @@
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
-		
-		
+		<!-- Bucket4j contiene algoritmo algoritmo de Token Bucket para controlar la tasa de solicitudes  -->
+		<dependency>
+			<groupId>com.bucket4j</groupId>
+			<artifactId>bucket4j-core</artifactId>
+			<version>${bucket4j.version}</version> <!-- Última versión estable -->
+		</dependency>		
 
-
+		<!-- Caffeine es una biblioteca de caché de Java de alto rendimiento -->
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>${caffeine.version}</version> <!-- Última versión estable -->
+		</dependency>
 
 		
 	</dependencies>

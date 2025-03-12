@@ -152,3 +152,24 @@ La consulta del historial debe soportar paginación.
 ├── Dockerfile
 └── docker-compose.yml
 
+
+## Flujo de la Lógica de Negocio
+*Cliente* envía una solicitud a /api/calculate.
+*CalculatorController* delega en CalculatorService.
+*CalculatorService:*
+   - Intenta obtener el porcentaje del servicio externo (con reintentos).
+   - Si falla, usa el valor en caché.
+   - Calcula el resultado y lo devuelve.
+*AuditLogService* registra la operación de forma asíncrona.
+
+
+### actualizar las dependencias en Visual Studio Code MAVEN
+```
+mvn clean install       # Limpia y reinstala dependencias
+mvn dependency:resolve  # Fuerza la descarga de dependencias
+```
+
+### Limpia el caché de Maven
+```
+mvn dependency:purge-local-repository
+```

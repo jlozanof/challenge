@@ -1,4 +1,4 @@
-package pe.edu.galaxy.training.java.sb.arq.layered.api_be_reclamos.controller.commons;
+package com.calculator.controller.commons;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -20,7 +20,7 @@ public class CustomResponse {
 	private String httpCode;
 	private String uri;
 	private String dataTime;
-	
+
 	// Data
 	private Object data;
 
