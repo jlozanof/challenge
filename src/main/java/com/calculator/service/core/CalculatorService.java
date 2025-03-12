@@ -1,4 +1,4 @@
-package com.calculator.service.base;
+package com.calculator.service.core;
 
 import com.calculator.dto.request.CalculationRequestDTO;
 import com.calculator.dto.response.CalculationResponseDTO;

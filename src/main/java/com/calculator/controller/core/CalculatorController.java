@@ -5,7 +5,7 @@ import com.calculator.dto.request.CalculationRequestDTO;
 import com.calculator.dto.response.ApiResponseDTO;
 import com.calculator.dto.response.CalculationResponseDTO;
 import com.calculator.event.AuditLogEvent;
-import com.calculator.service.base.CalculatorService;
+import com.calculator.service.core.CalculatorService;
 import com.calculator.entity.enums.Endpoint;
 
 import jakarta.validation.Valid;

@@ -3,7 +3,7 @@ package com.calculator.controller.core;
 import com.calculator.dto.response.ApiResponseDTO;
 import com.calculator.dto.response.HistoryResponseDTO;
 import com.calculator.entity.base.AuditLog;
-import com.calculator.service.base.AuditLogService;
+import com.calculator.service.core.AuditLogService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

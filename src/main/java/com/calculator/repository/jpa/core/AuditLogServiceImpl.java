@@ -2,7 +2,7 @@ package com.calculator.repository.jpa.core;
 
 import com.calculator.entity.base.AuditLog;
 import com.calculator.repository.jpa.base.AuditLogRepository;
-import com.calculator.service.base.AuditLogService;
+import com.calculator.service.core.AuditLogService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

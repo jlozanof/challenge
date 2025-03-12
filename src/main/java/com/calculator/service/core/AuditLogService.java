@@ -1,4 +1,4 @@
-package com.calculator.service.base;
+package com.calculator.service.core;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

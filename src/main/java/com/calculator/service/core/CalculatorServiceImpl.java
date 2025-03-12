@@ -4,8 +4,6 @@ import com.calculator.dto.request.CalculationRequestDTO;
 import com.calculator.dto.response.CalculationResponseDTO;
 import com.calculator.exception.CacheNotAvailableException;
 import com.calculator.exception.ExternalServiceException;
-import com.calculator.service.base.CalculatorService;
-import com.calculator.service.base.ExternalPercentageService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.Cache;

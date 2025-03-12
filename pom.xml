@@ -123,12 +123,12 @@
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 
 
 	<!-- Spring Boot DevTools for development -->
@@ -177,7 +177,8 @@
 			<version>${caffeine.version}</version> <!-- Última versión estable -->
 		</dependency>
 
-		
+
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

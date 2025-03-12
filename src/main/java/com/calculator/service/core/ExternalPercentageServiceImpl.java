@@ -1,7 +1,7 @@
 package com.calculator.service.core;
 
 import com.calculator.exception.ExternalServiceException;
-import com.calculator.service.base.ExternalPercentageService;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.Random;
