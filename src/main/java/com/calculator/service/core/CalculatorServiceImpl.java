@@ -41,9 +41,16 @@ public class CalculatorServiceImpl implements CalculatorService {
             throw new CacheNotAvailableException("Caché no configurada");
         }
         Cache.ValueWrapper wrapper = cache.get("percentageKey");
+
         if (wrapper == null || wrapper.get() == null) {
             throw new CacheNotAvailableException("No hay valor en caché");
         }
-        return (double) wrapper.get();
+
+        Object value = wrapper.get();
+        if (!(value instanceof Double)) {
+            throw new CacheNotAvailableException("Valor en caché no es un Double");
+        }
+
+        return (Double) value; // Cast seguro
     }
 }

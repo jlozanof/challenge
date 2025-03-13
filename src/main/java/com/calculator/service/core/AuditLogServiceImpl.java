@@ -4,14 +4,15 @@ import com.calculator.entity.base.AuditLog;
 import com.calculator.repository.jpa.base.AuditLogRepository;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@RequiredArgsConstructor
+@Service("auditLogService") // Nombre único para el contenedor de Spring.
+@RequiredArgsConstructor // Genera el constructor con campos finales
 public class AuditLogServiceImpl implements AuditLogService {
 
     private final AuditLogRepository auditLogRepository;

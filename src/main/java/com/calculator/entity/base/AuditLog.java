@@ -4,6 +4,7 @@ import lombok.Data;
 import jakarta.persistence.*;
 
 import org.hibernate.annotations.Comment;
+import org.springframework.http.HttpStatus;
 
 import com.calculator.entity.enums.Endpoint;
 
@@ -42,5 +43,9 @@ public class AuditLog {
 
     @Column(nullable = false)
     private String clientIp;
+
+    public void setStatus(HttpStatus status) {
+        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
+    }
 
 }

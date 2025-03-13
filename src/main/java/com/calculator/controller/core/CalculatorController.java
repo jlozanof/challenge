@@ -9,8 +9,11 @@ import com.calculator.service.core.CalculatorService;
 import com.calculator.entity.enums.Endpoint;
 
 import jakarta.validation.Valid;
-
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,12 +38,23 @@ public class CalculatorController {
     public ResponseEntity<ApiResponseDTO<CalculationResponseDTO>> calculate(
             @Valid @RequestBody CalculationRequestDTO request) {
         CalculationResponseDTO result = calculatorService.calculateWithPercentage(request);
+        // Obtener IP del cliente de forma segura
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
 
+        if (requestAttributes == null) {
+            throw new IllegalStateException("Contexto de solicitud no disponible");
+        }
+        HttpServletRequest httpRequest = requestAttributes.getRequest();
+        String clientIp = httpRequest.getRemoteAddr();
         eventPublisher.publishEvent(new AuditLogEvent(
                 Endpoint.CALCULATE,
                 request,
                 result,
-                null));
+                null, // error (null si es éxito)
+                clientIp,
+                HttpStatus.OK // Status HTTP
+        ));
 
         return ResponseEntity.ok(ApiResponseDTO.success(result));
     }
