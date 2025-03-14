@@ -16,8 +16,6 @@ public class PorcentajeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PorcentajeApplication.class, args);
-		System.out.println("contenedor ejecuntadose");
-
 	}
 
 }

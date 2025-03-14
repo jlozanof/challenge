@@ -173,3 +173,20 @@ mvn dependency:resolve  # Fuerza la descarga de dependencias
 ```
 mvn dependency:purge-local-repository
 ```
+
+
+Opción 1: Compilar sin ejecutar tests
+
+```bash
+mvn clean install -DskipTests
+```
+Opción 2: Compilar sin compilar ni ejecutar tests
+
+```bash
+mvn clean install -Dmaven.test.skip=true
+```
+Ejecutar la aplicación después de compilar
+
+```bash
+java -jar target/porcentaje-0.0.1-SNAPSHOT.jar
+```
