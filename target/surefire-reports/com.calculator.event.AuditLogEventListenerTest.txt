@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: com.calculator.event.AuditLogEventListenerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.309 s <<< FAILURE! -- in com.calculator.event.AuditLogEventListenerTest
+com.calculator.event.AuditLogEventListenerTest.handleAuditLogEvent_SavesLog -- Time elapsed: 1.297 s <<< ERROR!
+java.lang.UnsupportedOperationException: Unimplemented method 'setStatus'
+	at com.calculator.entity.base.AuditLog.setStatus(AuditLog.java:48)
+	at com.calculator.event.AuditLogEventListener.handleAuditLogEvent(AuditLogEventListener.java:29)
+	at com.calculator.event.AuditLogEventListenerTest.handleAuditLogEvent_SavesLog(AuditLogEventListenerTest.java:36)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+

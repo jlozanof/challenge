@@ -1,0 +1,4 @@
+com\calculator\event\AuditLogEventListenerTest.class
+com\calculator\controller\core\CalculatorControllerTest.class
+com\calculator\service\core\CalculatorServiceImplTest.class
+com\calculator\PorcentajeApplicationTests.class
